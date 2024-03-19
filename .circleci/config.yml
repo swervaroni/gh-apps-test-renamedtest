@@ -1,14 +1,29 @@
 version: 2.1
 
+orbs:
+  macos: circleci/macos@2.4.1
+  
 jobs:
-  hello-job:
-    docker:
-      - image: cimg/node:17.2.0 # the primary container, where your job's commands are run
+  build:
+    macos:
+      xcode: 15.0.0
+    resource_class: macos.m1.medium.gen1
+    
     steps:
-      - checkout # check out the code in the project directory
-      - run: echo "hello      world " # run the `echo` command
-
+      - run: xcodebuild -version
+      - run: brew --version
+      - run:
+          command: |
+            while true; do
+              sleep 600
+              echo "this in running in the background"
+            done
+          background: true
+      - macos/enable-vnc
+      
+    
+      
 workflows:
-  my-workflow:
+  say-hello-workflow:
     jobs:
-      - hello-job
+      - build
