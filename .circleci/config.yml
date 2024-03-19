@@ -16,7 +16,7 @@ jobs:
           command: |
             while true; do
               sleep 600
-              echo "this in running  in the background"
+              echo "this in running in the background"
             done
           background: true
       - macos/enable-vnc
